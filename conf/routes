@@ -3,8 +3,8 @@
 # ~~~~
 
 # Home page
-GET     /                                       Files.uploadForm
-POST     /parsedGedcom                           Files.parsedGedcom
+GET     /                                       Application.index
+POST     /searchForPlace                           Application.searchForPlace
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

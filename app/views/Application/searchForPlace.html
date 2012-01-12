@@ -2,47 +2,35 @@
 #{set title:'Home' /}
 
 
-#{set 'moreScripts'}
-
-    <script src="@{'/public/javascripts/jsonformatter.js'}" type="text/javascript"
-        charset="${_response_encoding}"></script>
-
-    <script type="text/javascript">
-        $(function() {
-            var btn = $('#formatJSON').click(function () {
-                // the browser chokes on the json string even though it is encoded
-                // var sJSON = parsedDocument.json
-                //FormatTextarea(sJSON);
-                FormatTextarea();
-                btn.button("Formated JSON")
-            });
-          })
-    </script>
-#{/set}
 
 <!-- Main hero unit for a primary marketing message or call to action -->
 <div class="content">
-    <h2>Out-of-model tags</h2>
-    <div id="warnings">${parsedDocument.warnings}</div>
+
+    <h2></h2>
+
+    <table border="1">
+        <tr>
+            <th>Standardized Name</th>
+            <th>Alternate Names</th>
+            <th>Types</th>
+            <th>Also Located In</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
+        #{list items:displayPlaces, as: 'displayPlace'}
+            <tr>
+                <td>${displayPlace.fullName}</td>
+                <td>${displayPlace.altNames}</td>
+                <td>${displayPlace.types}</td>
+                <td>${displayPlace.alsoLocatedIn}</td>
+                <td>${displayPlace.latitude}</td>
+                <td>${displayPlace.longitude}</td>
+            </tr>
+        #{/list}
+
+    </table>
+
 </div>
 
 <p></p>
 <p></p>
-
-<!-- Example row of columns -->
-<div class="row">
-    <div class="span-one-third">
-        <h2>2. Model as JSON</h2>
-	<div id="jsonTextArea" class="code">${parsedDocument.json}</div>
-        <!-- <button id="formatJSON" class="btn">Format JSON</button> -->
-    </div>
-    <div class="span-one-third">
-        <h2>1. Original Gedcom</h2>
-	<div id="gedcomTextArea" class="code">${parsedDocument.originalGedcom}</div>
-    </div>
-    <div class="span-one-third">
-        <h2>3. Re-Constituted Gedcom</h2>
-	<div id="reconstitutedGedcomTextArea" class="code">${parsedDocument.reconstituedGedcom}</div>
-    </div>
-</div>
-
