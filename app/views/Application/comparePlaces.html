@@ -1,0 +1,38 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+
+
+<!-- Main hero unit for a primary marketing message or call to action -->
+<div class="content">
+
+    <h2>Choose a places file for comparison</h2>
+
+    #{form @comparePlaces(), enctype:'multipart/form-data'}
+        <input type="file" name="placesFile"><br/>  <p></p>
+        <input type="submit" class="btn primary" name="submit" value="Process Places File">    <p></p>
+    #{/form}
+
+    <h2>Out of ${placesComparisonDTO.numPlacesCompared} there were ${placesComparisonDTO.numExactMatches} exact matches</h2>
+
+
+    <table border="1">
+        <tr>
+            <th>Input Place Name</th>
+            <th>FOLG Standardized Name</th>
+            <th>FamilySearch Standardized Name</th>
+        </tr>
+        #{list items:placesComparisonDTO.displayPlaces, as: 'displayPlace'}
+            <tr>
+                <td>${displayPlace.inputPlace}</td>
+                <td>${displayPlace.fullName}</td>
+                <td>${displayPlace.standard_text}</td>
+            </tr>
+        #{/list}
+
+    </table>
+
+</div>
+
+<p></p>
+<p></p>

@@ -4,7 +4,9 @@
 
 # Home page
 GET     /                                       Application.index
-POST     /searchForPlace                           Application.searchForPlace
+POST     /searchForPlace                        Application.searchForPlace
+GET     /comparePlacesUpload                   Application.comparePlacesUpload
+POST     /comparePlaces                         Application.comparePlaces
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
