@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Application extends Controller {
 
@@ -77,6 +78,8 @@ public class Application extends Controller {
    }
 
    public static PlacesComparisonDTO comparePlacesFile(File scrapeFile) throws IOException {
+      Pattern compiledPattern = Pattern.compile("[, ]");
+
       PlacesComparisonDTO placesComparisonDTO = new PlacesComparisonDTO();
       placesComparisonDTO.displayPlaces = new ArrayList<DisplayPlace>();
 
@@ -100,23 +103,36 @@ public class Application extends Controller {
          String standard_text = split[1];
          int numDataRecords = Integer.parseInt(split[2]);
 
-         int indx=0;
          List<DisplayPlace> placesSubList = getDisplayPlacesList(place);
-         for (DisplayPlace displayPlace : placesSubList) {
-            if (indx == 0)
-               displayPlace.setInputPlace(place);
-
-            indx++;
+         if (placesSubList.size() > 0) {
+            DisplayPlace displayPlace = placesSubList.get(0);
+            displayPlace.setInputPlace(place);
             displayPlace.setStandard_text(standard_text);
             displayPlace.setNumDataRecords(numDataRecords);
 
-            if (standard_text.equalsIgnoreCase(displayPlace.getFullName())) {
+            String fullName = displayPlace.getFullName();
+            if (standard_text.equalsIgnoreCase(fullName)) {
                placesComparisonDTO.numExactMatches++;
-               continue;
+               displayPlace.setWasExactMatch("Yes!");
+            } else {
+               displayPlace.setWasExactMatch("no");
             }
+
+
+            String modifedFolgName = compiledPattern.matcher(fullName).replaceAll("");
+            String modifiedStandardText = compiledPattern.matcher(standard_text).replaceAll("");
+            if (modifiedStandardText.equalsIgnoreCase(modifedFolgName)) {
+               placesComparisonDTO.numModifiedatches++;
+               displayPlace.setWasModifiedMatch("Yes!");
+            } else {
+               displayPlace.setWasModifiedMatch("no");
+            }
+
+
+            placesComparisonDTO.displayPlaces.add(displayPlace);
+
          }
 
-         placesComparisonDTO.displayPlaces.addAll(placesSubList);
       }
 
       placesComparisonDTO.numPlacesCompared = lineCount;

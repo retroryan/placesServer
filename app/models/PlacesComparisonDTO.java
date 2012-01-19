@@ -11,6 +11,7 @@ public class PlacesComparisonDTO {
    public List<DisplayPlace> displayPlaces;
 
    public int numExactMatches;
+   public int numModifiedatches;
 
    public int numPlacesCompared;
 

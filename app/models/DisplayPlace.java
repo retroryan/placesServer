@@ -19,6 +19,8 @@ public class DisplayPlace {
    private String inputPlace;
    private String standard_text;
    private int numDataRecords;
+   private String wasExactMatch;
+   private String wasModifiedMatch;
 
 
    public String getFullName() {
@@ -91,5 +93,21 @@ public class DisplayPlace {
 
    public void setNumDataRecords(int numDataRecords) {
       this.numDataRecords = numDataRecords;
+   }
+
+   public String getWasExactMatch() {
+      return wasExactMatch;
+   }
+
+   public void setWasExactMatch(String wasExactMatch) {
+      this.wasExactMatch = wasExactMatch;
+   }
+
+   public String getWasModifiedMatch() {
+      return wasModifiedMatch;
+   }
+
+   public void setWasModifiedMatch(String wasModifiedMatch) {
+      this.wasModifiedMatch = wasModifiedMatch;
    }
 }

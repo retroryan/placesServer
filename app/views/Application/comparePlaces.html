@@ -14,6 +14,7 @@
     #{/form}
 
     <h2>Out of ${placesComparisonDTO.numPlacesCompared} there were ${placesComparisonDTO.numExactMatches} exact matches</h2>
+    <h2>Modified FOLG places there were ${placesComparisonDTO.numModifiedatches} exact matches</h2>
 
 
     <table border="1">
@@ -21,12 +22,16 @@
             <th>Input Place Name</th>
             <th>FOLG Standardized Name</th>
             <th>FamilySearch Standardized Name</th>
+            <th>Exact Match</th>
+            <th>Modified Name Matches</th>
         </tr>
         #{list items:placesComparisonDTO.displayPlaces, as: 'displayPlace'}
             <tr>
                 <td>${displayPlace.inputPlace}</td>
                 <td>${displayPlace.fullName}</td>
                 <td>${displayPlace.standard_text}</td>
+                <td>${displayPlace.wasExactMatch}</td>
+                <td>${displayPlace.wasModifiedMatch}</td>
             </tr>
         #{/list}
 
