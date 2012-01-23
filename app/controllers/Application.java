@@ -18,10 +18,10 @@ public class Application extends Controller {
    }
 
    public static void searchForPlace(String place) throws IOException, SAXException {
-      List<Place> results = Standardizer.getInstance().standardize(place, 10);
+      List<Standardizer.PlaceScore> results = Standardizer.getInstance().standardize(place, 10);
       List<DisplayPlace> displayPlaces = new ArrayList<DisplayPlace>();
-      for (Place nextPlace : results) {
-         DisplayPlace displayPlace = getDisplayPlace(nextPlace);
+      for (Standardizer.PlaceScore nextPlace : results) {
+         DisplayPlace displayPlace = getDisplayPlace(nextPlace.getPlace());
          displayPlaces.add(displayPlace);
       }
 
@@ -38,7 +38,7 @@ public class Application extends Controller {
          StringBuffer alsoLocatedStrs = new StringBuffer();
          for (int indx = 0; indx < alsoLocatedInIds.length; indx++) {
             int alsoLocatedInId = alsoLocatedInIds[indx];
-            Place alsoLocatedPlace = standardizer.lookupPlace(alsoLocatedInId);
+            Place alsoLocatedPlace = standardizer.getPlace(alsoLocatedInId);
             if (alsoLocatedStrs.length() > 0) {
                alsoLocatedStrs.append(", ");
             }
@@ -53,8 +53,10 @@ public class Application extends Controller {
       String types = StringUtils.join(standardizedPlace.getTypes(), ",");
       displayPlace.setTypes(types);
 
-      displayPlace.setLatitude(standardizedPlace.getLatitude());
-      displayPlace.setLongitude(standardizedPlace.getLongitude());
+      if (standardizedPlace.getLatitude() != 0 || standardizedPlace.getLongitude() != 0) {
+        displayPlace.setLatitude(Double.toString(standardizedPlace.getLatitude()));
+        displayPlace.setLongitude(Double.toString(standardizedPlace.getLongitude()));
+      }
       return displayPlace;
    }
 
