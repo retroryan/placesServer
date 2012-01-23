@@ -1,0 +1,10 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+
+<h2>Choose a places file for comparison</h2>
+
+#{form @comparePlaces(), enctype:'multipart/form-data'}
+    <input type="file" name="placesFile"><br/>  <p></p>
+    <input type="submit" class="btn primary" name="submit" value="Process Places File">    <p></p>
+#{/form}

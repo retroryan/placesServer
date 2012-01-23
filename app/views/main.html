@@ -36,6 +36,10 @@
     <script src="@{'/public/javascripts/bootstrap-tabs.js'}" type="text/javascript"
             charset="${_response_encoding}"></script>
 
+    <script src="@{'/public/javascripts/sorttable.js'}" type="text/javascript"
+            charset="${_response_encoding}"></script>
+
+
     #{get 'moreScripts' /}
 
 </head>
@@ -46,6 +50,7 @@
             <div class="topbar-inner">
                 <div class="container-fluid">
                     <div style="float:left"><a class="brand" href="/">Place matcher</a></div>
+<!--                <div style="float:right"><a href="@{Application.comparePlacesUpload()}">Compare Places file</a></div> -->
 		    <div style="float:right"><a class="download" href="http://github.com/DallanQ/Gedcom">Download the source</a></div>
                 </div>
             </div>

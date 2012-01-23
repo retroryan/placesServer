@@ -14,6 +14,15 @@ public class DisplayPlace {
    private String longitude;
 
 
+   //This is not used on the main display site.  It is only used for the
+   // internal comparison site to compare the Church's standardizer
+   private String inputPlace;
+   private String standard_text;
+   private int numDataRecords;
+   private String wasExactMatch;
+   private String wasModifiedMatch;
+
+
    public String getFullName() {
       return fullName;
    }
@@ -60,5 +69,45 @@ public class DisplayPlace {
 
    public void setLongitude(String longitude) {
       this.longitude = longitude;
+   }
+
+   public String getInputPlace() {
+      return inputPlace;
+   }
+
+   public void setInputPlace(String inputPlace) {
+      this.inputPlace = inputPlace;
+   }
+
+   public String getStandard_text() {
+      return standard_text;
+   }
+
+   public void setStandard_text(String standard_text) {
+      this.standard_text = standard_text;
+   }
+
+   public int getNumDataRecords() {
+      return numDataRecords;
+   }
+
+   public void setNumDataRecords(int numDataRecords) {
+      this.numDataRecords = numDataRecords;
+   }
+
+   public String getWasExactMatch() {
+      return wasExactMatch;
+   }
+
+   public void setWasExactMatch(String wasExactMatch) {
+      this.wasExactMatch = wasExactMatch;
+   }
+
+   public String getWasModifiedMatch() {
+      return wasModifiedMatch;
+   }
+
+   public void setWasModifiedMatch(String wasModifiedMatch) {
+      this.wasModifiedMatch = wasModifiedMatch;
    }
 }
