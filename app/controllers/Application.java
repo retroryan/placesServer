@@ -33,7 +33,7 @@ public class Application extends Controller {
 
    public static void searchForPlace(String place) throws IOException, SAXException {
       List<DisplayPlace> displayPlaces = getDisplayPlacesList(place);
-
+      //System.out.println("displayPlaces = " + displayPlaces);
       render(displayPlaces);
    }
 
