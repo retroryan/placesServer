@@ -49,12 +49,9 @@
         <div class="topbar">
             <div class="topbar-inner">
                 <div class="container-fluid">
-                    <a class="brand" href="/">Places Standardization Server</a>
-                    <ul class="nav">
-                        <li class="active"><a href="/">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="@{Application.comparePlacesUpload()}">Compare</a></li>
-                    </ul>
+                    <div style="float:left"><a class="brand" href="/">Place matcher</a></div>
+<!--                <div style="float:right"><a href="@{Application.comparePlacesUpload()}">Compare Places file</a></div> -->
+		    <div style="float:right"><a class="download" href="http://github.com/DallanQ/Places">Download the source</a></div>
                 </div>
             </div>
         </div>
@@ -65,11 +62,6 @@
                 #{doLayout /}
 
            </div>
-
-            <footer>
-                <p>&copy; Company 2012</p>
-            </footer>
-
         </div>
     </body>
 

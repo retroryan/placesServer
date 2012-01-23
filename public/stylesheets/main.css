@@ -1,0 +1,58 @@
+div.topbar-inner {
+  background-color: #ff6f1b;
+  background-image: none;
+}
+.topbar a {
+  text-shadow: none;
+}
+a.download {
+  text-align: right; 
+  color: #FFF; 
+  font-size:18px; 
+  line-height:40px;
+}
+.btn.primary {
+  background-color: #007ecd;
+  background-image: -moz-linear-gradient(center top, #0f89db, #007ecd);
+}
+.topbar a.brand {
+  padding: 10px 20px;
+}
+h2 {
+  margin-bottom: 12px;
+}
+body {
+  padding-top: 55px;
+}
+#result {
+  border: 1px solid #bbb;
+}
+#result th {
+  background-color: #c8e6fa;
+  padding: 8px 10px;
+  font-size: 13px;
+  border-top: 1px solid #81c7f5;
+  border-bottom: 1px solid #bbb;
+  vertical-align: middle;
+}
+#result th:not(:last-child) {
+  border-right: 1px solid #81c7f5;
+}
+#result td:not(:last-child) {
+  border-right: 1px solid #ddd;
+}
+#result tr:nth-child(even) {
+  background-color: #fff;
+}
+#result tr:nth-child(odd) td {
+  background-color: #f6f6f6;
+}
+div.content {
+  margin-bottom: 10px;
+}
+.btn.primary {
+  font-size: 14px;
+  padding: 3px 13px 4px;
+  margin-left: 5px;
+}
+

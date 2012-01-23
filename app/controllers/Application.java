@@ -72,8 +72,10 @@ public class Application extends Controller {
       String types = StringUtils.join(standardizedPlace.getTypes(), ",");
       displayPlace.setTypes(types);
 
-      displayPlace.setLatitude(standardizedPlace.getLatitude());
-      displayPlace.setLongitude(standardizedPlace.getLongitude());
+      if (standardizedPlace.getLatitude() != 0 || standardizedPlace.getLongitude() != 0) {
+        displayPlace.setLatitude(Double.toString(standardizedPlace.getLatitude()));
+        displayPlace.setLongitude(Double.toString(standardizedPlace.getLongitude()));
+      }
       return displayPlace;
    }
 
@@ -141,3 +143,4 @@ public class Application extends Controller {
 
 
 }
+
