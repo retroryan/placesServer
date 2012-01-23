@@ -6,17 +6,17 @@
     <h2>Search for a place</h2>
 
     #{form @searchForPlace()}
-        <input type="text" name="place" id="place"><br/>  <p></p>
-        <input type="submit" class="btn primary" name="submit" value="Search">    <p></p>
+        <input type="text" name="place" id="place">
+        <input type="submit" class="btn primary" name="submit" value="Go">
     #{/form}
 
 
-    <table border="1">
+    <table id="result">
         <tr>
-            <th>Standardized Name</th>
-            <th>Alternate Names</th>
-            <th>Types</th>
-            <th>Also Located In</th>
+            <th>Standard name</th>
+            <th>Alternate names</th>
+            <th>Type</th>
+            <th>Also located in</th>
             <th>Latitude</th>
             <th>Longitude</th>
         </tr>
@@ -35,5 +35,3 @@
 
 </div>
 
-<p></p>
-<p></p>
