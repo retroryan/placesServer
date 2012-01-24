@@ -125,7 +125,6 @@ public class Labeler extends Controller {
 
          if (lineCount % 1000 == 0) {
             System.out.println("lineCount = " + lineCount);
-            break;
          }
 
          Integer id = Integer.valueOf(split[0]);
