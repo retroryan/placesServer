@@ -41,43 +41,13 @@ public class Application extends Controller {
       List<Standardizer.PlaceScore> results = Standardizer.getInstance().standardize(place, 10);
       List<DisplayPlace> displayPlaces = new ArrayList<DisplayPlace>();
       for (Standardizer.PlaceScore nextPlaceScore : results) {
-         DisplayPlace displayPlace = getDisplayPlace(nextPlaceScore.getPlace());
+         DisplayPlace displayPlace = PlacesUtil.getDisplayPlace(nextPlaceScore.getPlace());
          displayPlaces.add(displayPlace);
       }
       return displayPlaces;
    }
 
-   private static DisplayPlace getDisplayPlace(Place standardizedPlace) {
-      Standardizer standardizer = Standardizer.getInstance();
-      DisplayPlace displayPlace = new DisplayPlace();
-      displayPlace.setFullName(standardizedPlace.getFullName());
 
-      int[] alsoLocatedInIds = standardizedPlace.getAlsoLocatedInIds();
-      if ((alsoLocatedInIds != null) && (alsoLocatedInIds.length > 0)) {
-         StringBuffer alsoLocatedStrs = new StringBuffer();
-         for (int indx = 0; indx < alsoLocatedInIds.length; indx++) {
-            int alsoLocatedInId = alsoLocatedInIds[indx];
-            Place alsoLocatedPlace = standardizer.getPlace(alsoLocatedInId);
-            if (alsoLocatedStrs.length() > 0) {
-               alsoLocatedStrs.append(", ");
-            }
-            alsoLocatedStrs.append(alsoLocatedPlace.getFullName());
-         }
-         displayPlace.setAlsoLocatedIn(alsoLocatedStrs.toString());
-      }
-
-      String altNames = StringUtils.join(standardizedPlace.getAltNames(), ",");
-      displayPlace.setAltNames(altNames);
-
-      String types = StringUtils.join(standardizedPlace.getTypes(), ",");
-      displayPlace.setTypes(types);
-
-      if (standardizedPlace.getLatitude() != 0 || standardizedPlace.getLongitude() != 0) {
-        displayPlace.setLatitude(Double.toString(standardizedPlace.getLatitude()));
-        displayPlace.setLongitude(Double.toString(standardizedPlace.getLongitude()));
-      }
-      return displayPlace;
-   }
 
    public static PlacesComparisonDTO comparePlacesFile(File scrapeFile) throws IOException {
       Pattern compiledPattern = Pattern.compile("[, ]");

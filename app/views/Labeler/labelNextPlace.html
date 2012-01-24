@@ -1,0 +1,49 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<div class="content">
+
+    <h3>Choose the Best Match For</h3>
+    <h1>${nextAmbigDTO.ambigPlace}  (ID ${nextAmbigDTO.ambigId})</h1>
+
+    <table border="1">
+        <tr>
+            <th>Choice</th>
+            <th>Standard name</th>
+            <th>Alternate names</th>
+            <th>Type</th>
+            <th>Also located in</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
+
+    #{list items:nextAmbigDTO.ambigPlaceList, as: 'displayPlace'}
+
+            <tr>
+                #{form @storeLabelChoice()}
+
+                    <input type="hidden" name="ambigId" value="${nextAmbigDTO.ambigId} ">
+                    <input type="hidden" name="ambigPlace" value="${nextAmbigDTO.ambigPlace} ">
+                    <input type="hidden" name="placeId" value="${displayPlace.id} ">
+                    <input type="hidden" name="placeName" value="${displayPlace.placeName} ">
+                    <input type="hidden" name="placeFullName" value="${displayPlace.fullName} ">
+
+                    <td><input type="submit" class="btn primary" name="submit" value="Select"></td>
+                    <td>${displayPlace.fullName}</td>
+                    <td>${displayPlace.altNames}</td>
+                    <td>${displayPlace.types}</td>
+                    <td>${displayPlace.alsoLocatedIn}</td>
+                    <td>${displayPlace.latitude}</td>
+                    <td>${displayPlace.longitude}</td>
+
+                #{/form}
+
+            </tr>
+
+    #{/list}
+
+    </table>
+
+
+</div>
+

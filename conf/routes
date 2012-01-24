@@ -3,10 +3,14 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
-POST     /searchForPlace                        Application.searchForPlace
-GET     /comparePlacesUpload                   Application.comparePlacesUpload
-POST     /comparePlaces                         Application.comparePlaces
+GET     /                                   Application.index
+POST    /searchForPlace                     Application.searchForPlace
+GET     /comparePlacesUpload                Application.comparePlacesUpload
+POST    /comparePlaces                      Application.comparePlaces
+GET     /uploadAmbigPlaces                  Labeler.uploadAmbigPlaces
+POST    /uploadAmbigResults                 Labeler.uploadAmbigResults
+GET    /labelNextPlace                      Labeler.labelNextPlace
+POST    /storeLabelChoice                   Labeler.storeLabelChoice
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

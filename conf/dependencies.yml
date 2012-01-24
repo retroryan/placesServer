@@ -1,6 +1,7 @@
 # Application dependencies
 
 require:
-    - play
+    - play  [1.2.3,1.2.4]
+    - org.apache.commons ->  commons-math 2.2
 #    - com.amazonaws -> aws-java-sdk 1.2.7
 #    - org.jclouds.provider -> aws-s3 1.0.0
