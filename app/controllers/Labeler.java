@@ -1,9 +1,6 @@
 package controllers;
 
-import models.AmbigPlace;
-import models.AmbigResults;
-import models.DisplayPlace;
-import models.NextAmbigDTO;
+import models.*;
 import org.apache.commons.math.random.RandomData;
 import org.apache.commons.math.random.RandomDataImpl;
 import org.folg.places.standardize.Place;
@@ -28,17 +25,33 @@ public class Labeler extends Controller {
    public static int maxID = 0;
    public static RandomData randomData = new RandomDataImpl();
 
-   public static void storeLabelChoice(int ambigId, String ambigPlace, int placeId, String placeName, String placeFullName) {
+   public static void storeLabelChoice(String ambigId, String ambigPlace, String placeId, String placeName, String placeFullName) {
       System.out.println("ambigId = " + ambigId);
       System.out.println("ambigPlace = " + ambigPlace);
       System.out.println("placeName = " + placeName);
       System.out.println("placeFullName = " + placeFullName);
 
-      labelNextPlace(placeId);
+      int ambigIdInt = Integer.parseInt(ambigId.trim());
+      int standardizedId = Integer.parseInt(placeId.trim());
+      MatchResult matchResult = new MatchResult(ambigIdInt, ambigPlace, standardizedId, placeName, placeFullName);
+      matchResult.save();
+
+      AmbigResults ambigResults = new AmbigResults(ambigIdInt, ambigPlace, placeFullName);
+
+      labelNextPlace(ambigResults);
    }
 
-   public static void labelNextPlace(int ambigId) {
+   public static void labelNextPlace(AmbigResults ambigResults) {
+
+      if (maxID == 0)
+         setMaxId();
+
+
       Integer nextInt = randomData.nextInt(0, maxID);
+
+      String tmp = nextInt.toString();
+      int i2 = Integer.parseInt(tmp);
+      System.out.println("i2 = " + i2);
 
       GenericModel.JPAQuery byIdGreaterThan = AmbigPlace.find("byIdGreaterThan", nextInt);
       List<Object> objectList = byIdGreaterThan.fetch(1);
@@ -62,9 +75,25 @@ public class Labeler extends Controller {
          ambigPlaceDTOList.add(displayPlace);
       }
 
+
+      DisplayPlace d1 = new DisplayPlace();
+      d1.setFullName("This text is not a place.");
+      d1.setId(-1);
+      ambigPlaceDTOList.add(d1);
+
+      DisplayPlace d2 = new DisplayPlace();
+      d2.setFullName("I can't tell which place this should be.");
+      d2.setId(-2);
+      ambigPlaceDTOList.add(d2);
+
+      DisplayPlace d3 = new DisplayPlace();
+      d3.setFullName("Correct place is not listed.");
+      d3.setId(-3);
+      ambigPlaceDTOList.add(d3);
+
       NextAmbigDTO nextAmbigDTO = new NextAmbigDTO(ambigPlace.id, ambigPlace.place, ambigPlaceDTOList);
 
-      render(nextAmbigDTO);
+      render(nextAmbigDTO, ambigResults);
    }
 
    public static void uploadAmbigPlaces() {

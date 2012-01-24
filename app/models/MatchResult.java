@@ -2,10 +2,13 @@ package models;
 
 import play.db.jpa.Model;
 
+import javax.persistence.Entity;
+
 /**
  * User: ryan
  * Date: 1/23/12
  */
+@Entity(name = "matchresults")
 public class MatchResult extends Model {
 
    private int ambigId;
@@ -15,6 +18,14 @@ public class MatchResult extends Model {
    private String standardizedName;
    private String standardizedFullName;
 
+
+   public MatchResult(int ambigId, String ambigPlace, int standardizedId, String standardizedName, String standardizedFullName) {
+      this.ambigId = ambigId;
+      this.ambigPlace = ambigPlace;
+      this.standardizedId = standardizedId;
+      this.standardizedName = standardizedName;
+      this.standardizedFullName = standardizedFullName;
+   }
 
    public int getAmbigId() {
       return ambigId;
