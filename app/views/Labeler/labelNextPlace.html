@@ -1,13 +1,39 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
+#{set 'moreScripts'}
+    <script type="text/javascript">
+        var ambigId = "${nextAmbigDTO.ambigId}";
+        var ambigPlace = "${nextAmbigDTO.ambigPlace}";
+
+        function submitAmbigChoice(placeId, placeName, placeFullName) {
+            //document.storeLabelChoice.setAttribute("method","post");
+            addAttribute("ambigId",ambigId);
+            addAttribute("ambigPlace",ambigPlace);
+            addAttribute("placeId",placeId);
+            addAttribute("placeName",placeName);
+            addAttribute("placeFullName",placeFullName);
+
+            $("#storeLabelChoice").submit();
+        }
+
+        function addAttribute(name, value) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type","hidden");
+            hiddenField.setAttribute("name",name);
+            hiddenField.setAttribute("value",value);
+            $("#storeLabelChoice").append(hiddenField);
+        }
+
+    </script>
+#{/set}
+
 <div class="content">
 
     #{if ambigResults}
         <h3>Labeled ${ambigResults.ambigPlace} as "${ambigResults.fullname}"</h3>
         <p></p><p></p><p></p><p></p>
     #{/if}
-
 
     <h3>Choose the Best Match For</h3>
     <h1>${nextAmbigDTO.ambigPlace}  (ID ${nextAmbigDTO.ambigId})</h1>
@@ -23,31 +49,25 @@
             <th>Longitude</th>
         </tr>
 
-    </table>
-
     #{list items:nextAmbigDTO.ambigPlaceList, as: 'displayPlace'}
-
-        #{form @storeLabelChoice()}
-            <table>
                 <tr>
-                    <input type="hidden" name="ambigId" value="${nextAmbigDTO.ambigId} ">
-                    <input type="hidden" name="ambigPlace" value="${nextAmbigDTO.ambigPlace} ">
-                    <input type="hidden" name="placeId" value="${displayPlace.id} ">
-                    <input type="hidden" name="placeName" value="${displayPlace.placeName} ">
-                    <input type="hidden" name="placeFullName" value="${displayPlace.fullName} ">
-
-                    <td><input type="submit" class="btn primary" name="submit" value="Select"></td>
+                    <td><input type="submit" class="btn primary" name="submit" value="Select" onclick="submitAmbigChoice(${displayPlace.id}, '${displayPlace.placeName}', '${displayPlace.fullName}')"></td>
                     <td>${displayPlace.fullName}</td>
                     <td>${displayPlace.altNames}</td>
                     <td>${displayPlace.types}</td>
                     <td>${displayPlace.alsoLocatedIn}</td>
                     <td>${displayPlace.latitude}</td>
                     <td>${displayPlace.longitude}</td>
-                </tr>
-            </table>
-        #{/form}
 
+                </tr>
     #{/list}
+
+    </table>
+
+
+    #{form @storeLabelChoice(), id:'storeLabelChoice', method:'post'}
+
+    #{/form}
 
 </div>
 
