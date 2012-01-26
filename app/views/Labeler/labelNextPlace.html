@@ -3,8 +3,50 @@
 
 #{set 'moreScripts'}
     <script type="text/javascript">
-        var ambigId = "${nextAmbigDTO.ambigId}";
-        var ambigPlace = "${nextAmbigDTO.ambigPlace}";
+
+        var ambigId;
+        var ambigPlace;
+        var placesMap = {};
+
+        $(function () {
+            $.get("getNextPlace.json", function (data) {
+                ambigId = data.ambigId;
+                ambigPlace = data.ambigPlace;
+
+                $("#ambigPlaceLabel").append(ambigPlace);
+
+                ambigPlaceList = data.ambigPlaceList;
+
+                $.each(ambigPlaceList, function (index, item) {
+                    var tableRowStr = '<tr>' + addColumn('<input type="submit" class="btn primary" name="' + index + '" value="Select">');
+                    tableRowStr += addColumn(item.fullName);
+                    tableRowStr += addColumn(item.altNames);
+                    tableRowStr += addColumn(item.types);
+                    tableRowStr += addColumn(item.alsoLocatedIn);
+                    tableRowStr += addColumn(item.latitude);
+                    tableRowStr += addColumn(item.longitude) + "</tr>";
+                    $("#nextPlaceTable").append(tableRowStr);
+                    placesMap[index] = item;
+                });
+
+
+                $(".btn.primary").bind('click', function() {
+                    var index = $(this).attr("name");
+                    var place = placesMap[index];
+
+                    submitAmbigChoice(place.id,  place.placeName, place.fullName);
+                });
+
+            });
+        });
+
+        function addColumn(rowString) {
+            if (typeof(rowString) != "undefined") {
+                return "<td>" + rowString + "</td>";
+            }
+            return "<td></td>";
+        }
+
 
         function submitAmbigChoice(placeId, placeName, placeFullName) {
             //document.storeLabelChoice.setAttribute("method","post");
@@ -36,9 +78,9 @@
     #{/if}
 
     <h3>Choose the Best Match For</h3>
-    <h1>${nextAmbigDTO.ambigPlace}</h1>
+    <h1 id="ambigPlaceLabel"></h1>
 
-    <table id="result">
+    <table border="1" id="nextPlaceTable">
         <tr>
             <th>Choice</th>
             <th>Standard name</th>
@@ -49,18 +91,7 @@
             <th>Longitude</th>
         </tr>
 
-    #{list items:nextAmbigDTO.ambigPlaceList, as: 'displayPlace'}
-                <tr>
-                    <td><input type="submit" class="btn primary" name="submit" value="Select" onclick="submitAmbigChoice(${displayPlace.id}, '${displayPlace.placeName}', '${displayPlace.fullName}')"></td>
-                    <td>${displayPlace.fullName}</td>
-                    <td>${displayPlace.altNames}</td>
-                    <td>${displayPlace.types}</td>
-                    <td>${displayPlace.alsoLocatedIn}</td>
-                    <td>${displayPlace.latitude}</td>
-                    <td>${displayPlace.longitude}</td>
 
-                </tr>
-    #{/list}
 
     </table>
 

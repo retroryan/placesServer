@@ -26,10 +26,7 @@ public class Labeler extends Controller {
    public static RandomData randomData = new RandomDataImpl();
 
    public static void storeLabelChoice(String ambigId, String ambigPlace, String placeId, String placeName, String placeFullName) {
-      System.out.println("ambigId = " + ambigId);
-      System.out.println("ambigPlace = " + ambigPlace);
-      System.out.println("placeName = " + placeName);
-      System.out.println("placeFullName = " + placeFullName);
+      System.out.println(ambigId + ambigPlace+ placeName + placeFullName);
 
       int ambigIdInt = Integer.parseInt(ambigId.trim());
       int standardizedId = Integer.parseInt(placeId.trim());
@@ -42,16 +39,16 @@ public class Labeler extends Controller {
    }
 
    public static void labelNextPlace(AmbigResults ambigResults) {
+      render(ambigResults);
+   }
 
-      if (maxID == 0)
+   public static void getNextPlace() {
+
+      if (maxID == 0)  {
          setMaxId();
-
+      }
 
       Integer nextInt = randomData.nextInt(0, maxID);
-
-      String tmp = nextInt.toString();
-      int i2 = Integer.parseInt(tmp);
-      System.out.println("i2 = " + i2);
 
       GenericModel.JPAQuery byIdGreaterThan = AmbigPlace.find("byIdGreaterThan", nextInt);
       List<Object> objectList = byIdGreaterThan.fetch(1);
@@ -82,7 +79,7 @@ public class Labeler extends Controller {
       ambigPlaceDTOList.add(d1);
 
       DisplayPlace d2 = new DisplayPlace();
-      d2.setFullName("I can`t tell which place this should be.");
+      d2.setFullName("I can't tell which place this should be.");
       d2.setId(-2);
       ambigPlaceDTOList.add(d2);
 
@@ -93,7 +90,7 @@ public class Labeler extends Controller {
 
       NextAmbigDTO nextAmbigDTO = new NextAmbigDTO(ambigPlace.id, ambigPlace.place, ambigPlaceDTOList);
 
-      render(nextAmbigDTO, ambigResults);
+      renderJSON(nextAmbigDTO);
    }
 
    public static void uploadAmbigPlaces() {
@@ -141,7 +138,7 @@ public class Labeler extends Controller {
    }
 
    @SuppressWarnings("JpaQlInspection")
-   public static void setMaxId() {
+   public static int setMaxId() {
       Query query = AmbigPlace.em().createQuery("select MAX(a.id) from ambigplaces a ");
       List resultList = query.getResultList();
 
@@ -152,7 +149,7 @@ public class Labeler extends Controller {
          Labeler.maxID = 143357;
       }
 
-      return;
+      return Labeler.maxID;
    }
 }
 
