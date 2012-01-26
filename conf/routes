@@ -9,10 +9,14 @@ GET     /comparePlacesUpload                Application.comparePlacesUpload
 POST    /comparePlaces                      Application.comparePlaces
 GET     /uploadAmbigPlaces                  Labeler.uploadAmbigPlaces
 POST    /uploadAmbigResults                 Labeler.uploadAmbigResults
-GET     /labelNextPlace                     Labeler.labelNextPlace
+*       /labelNextPlace                     Labeler.labelNextPlace
 POST    /storeLabelChoice                   Labeler.storeLabelChoice
 GET     /getNextPlace.json        Labeler.getNextPlace
 
+
+# Adminstration
+GET     /admin/?                                MatchResults.list
+*       /admin                                  module:crud
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

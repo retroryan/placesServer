@@ -7,6 +7,7 @@ import org.folg.places.standardize.Place;
 import org.folg.places.standardize.Standardizer;
 import play.db.jpa.GenericModel;
 import play.mvc.Controller;
+import play.mvc.Util;
 
 import javax.persistence.Query;
 import java.io.BufferedReader;
@@ -137,8 +138,9 @@ public class Labeler extends Controller {
       render(ambigResults);
    }
 
+   @Util
    @SuppressWarnings("JpaQlInspection")
-   public static int setMaxId() {
+   public static void setMaxId() {
       Query query = AmbigPlace.em().createQuery("select MAX(a.id) from ambigplaces a ");
       List resultList = query.getResultList();
 
@@ -148,8 +150,6 @@ public class Labeler extends Controller {
          System.out.println("Could not find largest id from db, setting manually");
          Labeler.maxID = 143357;
       }
-
-      return Labeler.maxID;
    }
 }
 

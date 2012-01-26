@@ -66,4 +66,12 @@ public class MatchResult extends Model {
    public void setStandardizedFullName(String standardizedFullName) {
       this.standardizedFullName = standardizedFullName;
    }
+
+   @Override
+   public String toString() {
+      return "ambig place =" + ambigId +
+              ":" + ambigPlace +
+              "      standardized place = " + standardizedId +
+              ":" + standardizedName + "   "  + standardizedFullName;
+   }
 }
