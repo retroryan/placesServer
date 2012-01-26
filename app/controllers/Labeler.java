@@ -26,7 +26,7 @@ public class Labeler extends Controller {
    public static RandomData randomData = new RandomDataImpl();
 
    public static void storeLabelChoice(String ambigId, String ambigPlace, String placeId, String placeName, String placeFullName) {
-      System.out.println(ambigId + ambigPlace+ placeName + placeFullName);
+      //System.out.println(ambigId + ambigPlace+ placeName + placeFullName);
 
       int ambigIdInt = Integer.parseInt(ambigId.trim());
       int standardizedId = Integer.parseInt(placeId.trim());
@@ -60,7 +60,7 @@ public class Labeler extends Controller {
          System.out.println("oops! no ambig place found");
          error("oops! no ambig place found");
       }
-      System.out.println("random long was: " + nextInt + " ambigPlace = " + ambigPlace.getId() + " " + ambigPlace.getPlace());
+     // System.out.println("random long was: " + nextInt + " ambigPlace = " + ambigPlace.getId() + " " + ambigPlace.getPlace());
 
 
       List<Standardizer.PlaceScore> placeScoreList = Standardizer.getInstance().standardize(ambigPlace.getPlace(), 10);
