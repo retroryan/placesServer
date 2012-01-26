@@ -82,7 +82,7 @@ public class Labeler extends Controller {
       ambigPlaceDTOList.add(d1);
 
       DisplayPlace d2 = new DisplayPlace();
-      d2.setFullName("I can't tell which place this should be.");
+      d2.setFullName("I can`t tell which place this should be.");
       d2.setId(-2);
       ambigPlaceDTOList.add(d2);
 
