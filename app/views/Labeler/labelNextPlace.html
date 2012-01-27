@@ -19,7 +19,7 @@
 
                 $.each(ambigPlaceList, function (index, item) {
                     var tableRowStr = '<tr>' + addColumn('<input type="submit" class="btn primary" name="' + index + '" value="Select">');
-                    tableRowStr += addColumn(item.fullName);
+                    tableRowStr += addLinkColumn(item.id, item.fullName);
                     tableRowStr += addColumn(item.altNames);
                     tableRowStr += addColumn(item.types);
                     tableRowStr += addColumn(item.alsoLocatedIn);
@@ -48,13 +48,29 @@
         }
 
 
-        function submitAmbigChoice(placeId, placeName, placeFullName) {
+        function addLinkColumn(id, fullName) {
+            var rowString;
+            if (typeof(fullName) != "undefined") {
+                //The id's -1, -2, -3 are the alternative choices when none of the places match and should not be a link
+                if (id > -1)   {
+                    encodedFullName = fullName.replace(/ /gi,"_");
+                    rowString = '<a href="http://www.werelate.org/Place:' +  encodedFullName + '">' + fullName + '</a>';
+                }
+                else {
+                    rowString = fullName;
+                }
+                return "<td>" + rowString + "</td>";
+            }
+            return "<td></td>";
+        }
+
+        function submitAmbigChoice(standardizedId, standardizedName, standardizedFullName) {
             //document.storeLabelChoice.setAttribute("method","post");
-            addAttribute("ambigId",ambigId);
-            addAttribute("ambigPlace",ambigPlace);
-            addAttribute("placeId",placeId);
-            addAttribute("placeName",placeName);
-            addAttribute("placeFullName",placeFullName);
+            addAttribute("matchResult.ambigId",ambigId);
+            addAttribute("matchResult.ambigPlace",ambigPlace);
+            addAttribute("matchResult.standardizedId",standardizedId);
+            addAttribute("matchResult.standardizedName",standardizedName);
+            addAttribute("matchResult.standardizedFullName",standardizedFullName);
 
             $("#storeLabelChoice").submit();
         }
@@ -71,11 +87,6 @@
 #{/set}
 
 <div class="content">
-
-    #{if ambigResults}
-        <h3>Labeled ${ambigResults.ambigPlace} as "${ambigResults.fullname}"</h3>
-        <p></p><p></p><p></p><p></p>
-    #{/if}
 
     <h3>Choose the Best Match For</h3>
     <h1 id="ambigPlaceLabel"></h1>

@@ -26,21 +26,14 @@ public class Labeler extends Controller {
    public static int maxID = 0;
    public static RandomData randomData = new RandomDataImpl();
 
-   public static void storeLabelChoice(String ambigId, String ambigPlace, String placeId, String placeName, String placeFullName) {
-      //System.out.println(ambigId + ambigPlace+ placeName + placeFullName);
 
-      int ambigIdInt = Integer.parseInt(ambigId.trim());
-      int standardizedId = Integer.parseInt(placeId.trim());
-      MatchResult matchResult = new MatchResult(ambigIdInt, ambigPlace, standardizedId, placeName, placeFullName);
+   public static void storeLabelChoice(MatchResult matchResult) {
       matchResult.save();
-
-      AmbigResults ambigResults = new AmbigResults(ambigIdInt, ambigPlace, placeFullName);
-
-      labelNextPlace(ambigResults);
+      labelNextPlace();
    }
 
-   public static void labelNextPlace(AmbigResults ambigResults) {
-      render(ambigResults);
+   public static void labelNextPlace() {
+      render();
    }
 
    public static void getNextPlace() {
