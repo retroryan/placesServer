@@ -1,0 +1,115 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+#{set 'moreScripts'}
+    <script type="text/javascript">
+
+        var ambigId;
+        var ambigPlace;
+        var placesMap = {};
+
+        $(function () {
+            $.get("getNextPlace.json", function (data) {
+                ambigId = data.ambigId;
+                ambigPlace = data.ambigPlace;
+
+                $("#ambigPlaceLabel").append(ambigPlace);
+
+                ambigPlaceList = data.ambigPlaceList;
+
+                $.each(ambigPlaceList, function (index, item) {
+                    var tableRowStr = '<tr>' + addColumn('<input type="submit" class="btn primary" name="' + index + '" value="Select">');
+                    tableRowStr += addLinkColumn(item.id, item.fullName);
+                    tableRowStr += addColumn(item.altNames);
+                    tableRowStr += addColumn(item.types);
+                    tableRowStr += addColumn(item.alsoLocatedIn);
+                    tableRowStr += addColumn(item.latitude);
+                    tableRowStr += addColumn(item.longitude) + "</tr>";
+                    $("#nextPlaceTable").append(tableRowStr);
+                    placesMap[index] = item;
+                });
+
+
+                $(".btn.primary").bind('click', function() {
+                    var index = $(this).attr("name");
+                    var place = placesMap[index];
+
+                    submitAmbigChoice(place.id,  place.placeName, place.fullName);
+                });
+
+            });
+        });
+
+        function addColumn(rowString) {
+            if (typeof(rowString) != "undefined") {
+                return "<td>" + rowString + "</td>";
+            }
+            return "<td></td>";
+        }
+
+
+        function addLinkColumn(id, fullName) {
+            var rowString;
+            if (typeof(fullName) != "undefined") {
+                //The id's -1, -2, -3 are the alternative choices when none of the places match and should not be a link
+                if (id > -1)   {
+                    encodedFullName = fullName.replace(/ /gi,"_");
+                    rowString = '<a href="http://www.werelate.org/wiki/Place:' +  encodedFullName + '">' + fullName + '</a>';
+                }
+                else {
+                    rowString = fullName;
+                }
+                return "<td>" + rowString + "</td>";
+            }
+            return "<td></td>";
+        }
+
+        function submitAmbigChoice(standardizedId, standardizedName, standardizedFullName) {
+            //document.storeLabelChoice.setAttribute("method","post");
+            addAttribute("matchResult.ambigId",ambigId);
+            addAttribute("matchResult.ambigPlace",ambigPlace);
+            addAttribute("matchResult.standardizedId",standardizedId);
+            addAttribute("matchResult.standardizedName",standardizedName);
+            addAttribute("matchResult.standardizedFullName",standardizedFullName);
+
+            $("#storeLabelChoice").submit();
+        }
+
+        function addAttribute(name, value) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type","hidden");
+            hiddenField.setAttribute("name",name);
+            hiddenField.setAttribute("value",value);
+            $("#storeLabelChoice").append(hiddenField);
+        }
+
+    </script>
+#{/set}
+
+<div class="content">
+
+    <h3>Choose the Best Match For</h3>
+    <h1 id="ambigPlaceLabel"></h1>
+
+    <table border="1" id="nextPlaceTable">
+        <tr>
+            <th>Choice</th>
+            <th>Standard name</th>
+            <th>Alternate names</th>
+            <th>Type</th>
+            <th>Also located in</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
+
+
+
+    </table>
+
+
+    #{form @storeLabelChoice(), id:'storeLabelChoice', method:'post'}
+
+    #{/form}
+
+</div>
+

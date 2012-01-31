@@ -27,7 +27,7 @@
 
     <meta charset="${_response_encoding}">
     <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-        #{get 'moreStyles' /}
+#{get 'moreStyles' /}
     <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
 
     <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript"
@@ -36,29 +36,28 @@
     <script src="@{'/public/javascripts/bootstrap-tabs.js'}" type="text/javascript"
             charset="${_response_encoding}"></script>
 
-    #{get 'moreScripts' /}
+#{get 'moreScripts' /}
 
 </head>
 
-    <body>
+<body>
 
-        <div class="topbar">
-            <div class="topbar-inner">
-                <div class="container-fluid">
-                    <div style="float:left"><a class="brand" href="/">Place matcher</a></div>
-                    <div style="float:left"><a class="brand" href="@{Labeler.labelNextPlace()}" style="font-size: 15px; margin-top: 3px">Choose the best match</a></div>
-		    <div style="float:right"><a class="download" href="http://github.com/DallanQ/Places">Download the source</a></div>
-                </div>
-            </div>
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <div style="float:left"><a class="brand" href="/">Place matcher</a></div>
+            <div style="float:right"><a class="download" href="http://github.com/DallanQ/Places">Download the source</a></div>
         </div>
+    </div>
+</div>
 
-        <div class="container">
-            <div class="content">
+<div class="container">
+    <div class="content">
 
-                #{doLayout /}
+    #{doLayout /}
 
-           </div>
-        </div>
-    </body>
+    </div>
+</div>
+</body>
 
 </html>

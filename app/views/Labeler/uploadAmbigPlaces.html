@@ -1,0 +1,10 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+
+<h2>Choose an initial ambig places file</h2>
+
+#{form @uploadAmbigResults(), enctype:'multipart/form-data'}
+    <input type="file" name="ambigFile"><br/>  <p></p>
+    <input type="submit" class="btn primary" name="submit" value="Upload Ambig File">    <p></p>
+#{/form}

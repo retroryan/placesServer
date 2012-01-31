@@ -6,6 +6,7 @@ package models;
  */
 public class DisplayPlace {
    
+   
    private String fullName;
    private String altNames;
    private String types;
@@ -22,6 +23,10 @@ public class DisplayPlace {
    private String wasExactMatch;
    private String wasModifiedMatch;
 
+
+   //This is only used for the ambig labeler
+   private int id;
+   private String placeName;
 
    public String getFullName() {
       return fullName;
@@ -109,5 +114,21 @@ public class DisplayPlace {
 
    public void setWasModifiedMatch(String wasModifiedMatch) {
       this.wasModifiedMatch = wasModifiedMatch;
+   }
+
+   public int getId() {
+      return id;
+   }
+
+   public void setId(int id) {
+      this.id = id;
+   }
+
+   public String getPlaceName() {
+      return placeName;
+   }
+
+   public void setPlaceName(String placeName) {
+      this.placeName = placeName;
    }
 }
