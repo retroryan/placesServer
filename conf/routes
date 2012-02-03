@@ -7,11 +7,12 @@ GET     /                                   Application.index
 POST    /searchForPlace                     Application.searchForPlace
 GET     /comparePlacesUpload                Application.comparePlacesUpload
 POST    /comparePlaces                      Application.comparePlaces
+GET     /downloadLabels                     Application.downloadLabels
 GET     /uploadAmbigPlaces                  Labeler.uploadAmbigPlaces
 POST    /uploadAmbigResults                 Labeler.uploadAmbigResults
 *       /labelNextPlace                     Labeler.labelNextPlace
 POST    /storeLabelChoice                   Labeler.storeLabelChoice
-GET     /getNextPlace.json        Labeler.getNextPlace
+GET     /getNextPlace.json                  Labeler.getNextPlace
 
 
 # Adminstration

@@ -1,17 +1,16 @@
 package controllers;
 
 import models.DisplayPlace;
+import models.MatchResult;
 import models.PlacesComparisonDTO;
 import org.apache.commons.lang.StringUtils;
 import org.folg.places.standardize.Place;
 import org.folg.places.standardize.Standardizer;
 import org.xml.sax.SAXException;
+import play.db.jpa.JPABase;
 import play.mvc.Controller;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -26,6 +25,20 @@ public class Application extends Controller {
       render();
    }
 
+
+   public static void downloadLabels() throws IOException {
+      File tmpMatchBackup = File.createTempFile("tmpMatchBackup", "csv");
+      PrintWriter writer = new PrintWriter(tmpMatchBackup);
+      writer.println("ambigId|ambigPlace|standardizedId|standardizedName|standardizedFullName");
+
+      List<MatchResult> matchResultList = MatchResult.findAll();
+      for (MatchResult matchResult : matchResultList) {
+         writer.println(matchResult.getAmbigId()+"|"+matchResult.getAmbigPlace()+"|"+matchResult.getStandardizedId()+"|"+matchResult.getStandardizedName()+"|"+ matchResult.getStandardizedFullName());
+      }
+
+      writer.close();
+      renderBinary(tmpMatchBackup);
+   }
    public static void comparePlaces(File placesFile) throws IOException {
       PlacesComparisonDTO placesComparisonDTO = comparePlacesFile(placesFile);
       render(placesComparisonDTO);
@@ -46,8 +59,6 @@ public class Application extends Controller {
       }
       return displayPlaces;
    }
-
-
 
    public static PlacesComparisonDTO comparePlacesFile(File scrapeFile) throws IOException {
       Pattern compiledPattern = Pattern.compile("[, ]");
@@ -110,6 +121,7 @@ public class Application extends Controller {
       placesComparisonDTO.numPlacesCompared = lineCount;
       return placesComparisonDTO;
    }
+
 
 
 }
