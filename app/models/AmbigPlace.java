@@ -17,6 +17,8 @@ public class AmbigPlace extends GenericModel {
 
    public String place;
 
+   public boolean matched = false;
+
    public AmbigPlace(int id, String place) {
       this.id = id;
       this.place = place;
@@ -36,6 +38,14 @@ public class AmbigPlace extends GenericModel {
 
    public void setPlace(String place) {
       this.place = place;
+   }
+
+   public boolean isMatched() {
+      return matched;
+   }
+
+   public void setMatched(boolean matched) {
+      this.matched = matched;
    }
 }
 

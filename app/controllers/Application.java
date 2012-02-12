@@ -72,6 +72,10 @@ public class Application extends Controller {
       while (bufferedReader.ready()) {
 
          String nextLine = bufferedReader.readLine();
+         if (nextLine.compareTo("txt") == 0) {
+
+         }
+
          nextLine = nextLine.trim().toLowerCase();
          if (nextLine.length() == 0)
             continue;

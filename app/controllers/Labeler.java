@@ -5,7 +5,6 @@ import org.apache.commons.math.random.RandomData;
 import org.apache.commons.math.random.RandomDataImpl;
 import org.folg.places.standardize.Place;
 import org.folg.places.standardize.Standardizer;
-import play.db.jpa.GenericModel;
 import play.mvc.Controller;
 import play.mvc.Util;
 
@@ -29,6 +28,11 @@ public class Labeler extends Controller {
 
    public static void storeLabelChoice(MatchResult matchResult) {
       matchResult.save();
+
+      AmbigPlace ambig = AmbigPlace.findById(matchResult.getAmbigId());
+      ambig.setMatched(true);
+      ambig.save();
+
       labelNextPlace();
    }
 
@@ -38,24 +42,16 @@ public class Labeler extends Controller {
 
    public static void getNextPlace() {
 
-      if (maxID == 0)  {
+      if (maxID == 0) {
          setMaxId();
       }
 
-      Integer nextInt = randomData.nextInt(0, maxID);
-
-      GenericModel.JPAQuery byIdGreaterThan = AmbigPlace.find("byIdGreaterThan", nextInt);
-      List<Object> objectList = byIdGreaterThan.fetch(1);
-
       AmbigPlace ambigPlace = null;
-      if (objectList.size() > 0) {
-         ambigPlace = (AmbigPlace) objectList.get(0);
-      } else {
-         System.out.println("oops! no ambig place found");
-         error("oops! no ambig place found");
-      }
-     // System.out.println("random long was: " + nextInt + " ambigPlace = " + ambigPlace.getId() + " " + ambigPlace.getPlace());
-
+      do {
+         Integer nextInt = randomData.nextInt(0, maxID);
+         ambigPlace = AmbigPlace.find("byIdGreaterThan", nextInt).first();
+         System.out.println("random long was: " + nextInt + " ambigPlace = " + ambigPlace.getId() + " " + ambigPlace.getPlace());
+      } while (ambigPlace.isMatched());
 
       List<Standardizer.PlaceScore> placeScoreList = Standardizer.getInstance().standardize(ambigPlace.getPlace(), 10);
       List<DisplayPlace> ambigPlaceDTOList = new ArrayList<DisplayPlace>();
