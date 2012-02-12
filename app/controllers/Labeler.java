@@ -50,7 +50,7 @@ public class Labeler extends Controller {
       do {
          Integer nextInt = randomData.nextInt(0, maxID);
          ambigPlace = AmbigPlace.find("byIdGreaterThan", nextInt).first();
-         System.out.println("random long was: " + nextInt + " ambigPlace = " + ambigPlace.getId() + " " + ambigPlace.getPlace());
+         //System.out.println("random long was: " + nextInt + " ambigPlace = " + ambigPlace.getId() + " " + ambigPlace.getPlace());
       } while (ambigPlace.isMatched());
 
       List<Standardizer.PlaceScore> placeScoreList = Standardizer.getInstance().standardize(ambigPlace.getPlace(), 10);
