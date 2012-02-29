@@ -63,20 +63,25 @@ public class DisplayPlace {
    }
 
    public void setSources(Place.Source[] sources) {
-      this.sources = new Source[sources.length];
-      for (int i = 0; i < sources.length; i++) {
-         Place.Source src = sources[i];
-         String link = "";
-         if (src.source.equals("fhlc")) {
-            link = "http://www.familysearch.org/eng/library/fhlcatalog/supermainframeset.asp?display=localitydetails&subject="+src.id+"&columns=*,0,0";
+      if (sources == null) {
+         this.sources = new Source[0];
+      }
+      else {
+         this.sources = new Source[sources.length];
+         for (int i = 0; i < sources.length; i++) {
+            Place.Source src = sources[i];
+            String link = "";
+            if (src.source.equals("fhlc")) {
+               link = "http://www.familysearch.org/eng/library/fhlcatalog/supermainframeset.asp?display=localitydetails&subject="+src.id+"&columns=*,0,0";
+            }
+            else if (src.source.equals("getty")) {
+               link = "http://www.getty.edu/vow/TGNFullDisplay?find=&place=&nation=&english=Y&subjectid="+src.id;
+            }
+            else if (src.source.equals("wikipedia")) {
+               link = "http://en.wikipedia.org/wiki/"+src.id.replace(' ','_');
+            }
+            this.sources[i] = new Source(src.source, link);
          }
-         else if (src.source.equals("getty")) {
-            link = "http://www.getty.edu/vow/TGNFullDisplay?find=&place=&nation=&english=Y&subjectid="+src.id;
-         }
-         else if (src.source.equals("wikipedia")) {
-            link = "http://en.wikipedia.org/wiki/"+src.id.replace(' ','_');
-         }
-         this.sources[i] = new Source(src.source, link);
       }
    }
 
