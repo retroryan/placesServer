@@ -1,18 +1,28 @@
 package models;
 
+import org.folg.places.standardize.Place;
+
 /**
  * User: Ryan K.
  * Date: 1/12/12
  */
 public class DisplayPlace {
-   
+   public static class Source {
+      public String source;
+      public String link;
+      public Source(String source, String link) {
+         this.source = source;
+         this.link = link;
+      }
+   }
    
    private String fullName;
-   private String altNames;
+   private Place.AltName[] altNames;
    private String types;
    private String alsoLocatedIn;
    private String latitude;
    private String longitude;
+   private DisplayPlace.Source[] sources;
 
 
    //This is not used on the main display site.  It is only used for the
@@ -32,16 +42,42 @@ public class DisplayPlace {
       return fullName;
    }
 
+   public String getLink() {
+      return "http://www.werelate.org/wiki/Place:"+fullName.replace(' ','_');
+   }
+
    public void setFullName(String fullName) {
       this.fullName = fullName;
    }
 
-   public String getAltNames() {
+   public Place.AltName[] getAltNames() {
       return altNames;
    }
 
-   public void setAltNames(String altNames) {
+   public void setAltNames(Place.AltName[] altNames) {
       this.altNames = altNames;
+   }
+
+   public DisplayPlace.Source[] getSources() {
+      return sources;
+   }
+
+   public void setSources(Place.Source[] sources) {
+      this.sources = new Source[sources.length];
+      for (int i = 0; i < sources.length; i++) {
+         Place.Source src = sources[i];
+         String link = "";
+         if (src.source.equals("fhlc")) {
+            link = "http://www.familysearch.org/eng/library/fhlcatalog/supermainframeset.asp?display=localitydetails&subject="+src.id+"&columns=*,0,0";
+         }
+         else if (src.source.equals("getty")) {
+            link = "http://www.getty.edu/vow/TGNFullDisplay?find=&place=&nation=&english=Y&subjectid="+src.id;
+         }
+         else if (src.source.equals("wikipedia")) {
+            link = "http://en.wikipedia.org/wiki/"+src.id.replace(' ','_');
+         }
+         this.sources[i] = new Source(src.source, link);
+      }
    }
 
    public String getTypes() {

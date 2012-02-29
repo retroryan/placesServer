@@ -19,15 +19,21 @@
             <th>Also located in</th>
             <th>Latitude</th>
             <th>Longitude</th>
+            <th>Sources</th>
         </tr>
         #{list items:displayPlaces, as: 'displayPlace'}
             <tr>
-                <td>${displayPlace.fullName}</td>
-                <td>${displayPlace.altNames}</td>
+                <td><a href="${displayPlace.link}">${displayPlace.fullName}</a></td>
+                <td>#{list items:displayPlace.altNames, as: 'altName'}
+                   ${altName.altName} #{if altName.source}<i>(${altName.source})</i>#{/if}<br>
+                #{/list}</td>
                 <td>${displayPlace.types}</td>
                 <td>${displayPlace.alsoLocatedIn}</td>
                 <td>${displayPlace.latitude}</td>
                 <td>${displayPlace.longitude}</td>
+                <td>#{list items:displayPlace.sources, as: 'source'}
+                   <a href="${source.link}">${source.source}</a><br>
+                #{/list}</td>
             </tr>
         #{/list}
 

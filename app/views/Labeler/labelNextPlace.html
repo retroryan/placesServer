@@ -20,11 +20,12 @@
                 $.each(ambigPlaceList, function (index, item) {
                     var tableRowStr = '<tr>' + addColumn('<input type="submit" class="btn primary" name="' + index + '" value="Select">');
                     tableRowStr += addLinkColumn(item.id, item.fullName);
-                    tableRowStr += addColumn(item.altNames);
+                    tableRowStr += addAltNameColumn(item.altNames);
                     tableRowStr += addColumn(item.types);
                     tableRowStr += addColumn(item.alsoLocatedIn);
                     tableRowStr += addColumn(item.latitude);
-                    tableRowStr += addColumn(item.longitude) + "</tr>";
+                    tableRowStr += addColumn(item.longitude);
+                    tableRowStr += addSourceColumn(item.sources) + "</tr>";
                     $("#nextPlaceTable").append(tableRowStr);
                     placesMap[index] = item;
                 });
@@ -47,6 +48,34 @@
             return "<td></td>";
         }
 
+        function escapeHtml(s) {
+           return s.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+        }
+
+        function addAltNameColumn(altNames) {
+           var result = '';
+           if (typeof(altNames) != "undefined") {
+              for (var i = 0; i < altNames.length; i++) {
+                 if (result) result += '<br>';
+                 result += escapeHtml(altNames[i].altName);
+                 if (altNames[i].source) {
+                    result += ' <i>('+escapeHtml(altNames[i].source)+')</i>';
+                 }
+              }
+           }
+           return addColumn(result);
+        }
+
+        function addSourceColumn(sources) {
+           var result = '';
+           if (typeof(sources) != "undefined") {
+              for (var i = 0; i < sources.length; i++) {
+                 if (result) result += '<br>';
+                 result += '<a href="'+sources[i].link+'">'+escapeHtml(sources[i].source)+'</a>';
+              }
+           }
+           return addColumn(result);
+        }
 
         function addLinkColumn(id, fullName) {
             var rowString;
@@ -100,6 +129,7 @@
             <th>Also located in</th>
             <th>Latitude</th>
             <th>Longitude</th>
+            <th>Sources</th>
         </tr>
 
 

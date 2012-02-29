@@ -30,8 +30,7 @@ public class PlacesUtil {
          displayPlace.setAlsoLocatedIn(alsoLocatedStrs.toString());
       }
 
-      String altNames = StringUtils.join(standardizedPlace.getAltNames(), ",");
-      displayPlace.setAltNames(altNames);
+      displayPlace.setAltNames(standardizedPlace.getAltNames());
 
       String types = StringUtils.join(standardizedPlace.getTypes(), ",");
       displayPlace.setTypes(types);
@@ -40,6 +39,8 @@ public class PlacesUtil {
          displayPlace.setLatitude(Double.toString(standardizedPlace.getLatitude()));
          displayPlace.setLongitude(Double.toString(standardizedPlace.getLongitude()));
       }
+
+      displayPlace.setSources(standardizedPlace.getSources());
 
       displayPlace.setId(standardizedPlace.getId());
       displayPlace.setPlaceName(standardizedPlace.getName());
